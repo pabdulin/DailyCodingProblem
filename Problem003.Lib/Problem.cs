@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Problem003.Lib
 {
@@ -20,14 +21,55 @@ node = Node('root', Node('left', Node('left.left')), Node('right'))
 assert deserialize(serialize(node)).left.left.val == 'left.left'
         */
 
-        public static string Serialize(Node root)
+        private const char ValueTag = '^';
+        private const char LeftTag = '<';
+        private const char RightTag = '>';
+        private const string NullValue = "null";
+
+        public static string Serialize(Node node, StringBuilder s)
         {
-            return string.Empty;
+            if (node == null)
+            {
+                s.Append($"{NullValue}");
+            }
+            else
+            {
+                s.Append($"{ValueTag}{node.Val}");
+                if (node.Left != null || node.Right != null)
+                {
+                    s.Append($"{LeftTag}");
+                    Serialize(node.Left, s);
+                    s.Append($"{RightTag}");
+                    Serialize(node.Right, s);
+                }
+            }
+
+            return s.ToString();
         }
 
         public static Node Deserialize(string treeStr)
         {
-            return new Node(string.Empty);
+            if (treeStr == $"{NullValue}")
+            {
+                return null;
+            }
+            else
+            {
+                var leftIdx = treeStr.IndexOf(LeftTag);
+                var rightIdx = treeStr.LastIndexOf(RightTag);
+                if (leftIdx == -1 && rightIdx == -1)
+                {
+                    var valueStr = treeStr.Substring(1, treeStr.Length - 1);
+                    return new Node(valueStr);
+                }
+                else
+                {
+                    var valueStr = treeStr.Substring(1, leftIdx - 1);
+                    var leftSubtree = treeStr.Substring(leftIdx + 1, rightIdx - leftIdx - 1);
+                    var rightSubtree = treeStr.Substring(rightIdx + 1, treeStr.Length - rightIdx - 1);
+                    return new Node(valueStr, Deserialize(leftSubtree), Deserialize(rightSubtree));
+                }
+            }
         }
     }
 }

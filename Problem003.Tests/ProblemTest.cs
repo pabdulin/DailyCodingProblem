@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Problem003.Lib;
+using System.Text;
 
 namespace Problem003.Tests
 {
@@ -25,9 +26,28 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
         [TestMethod]
         public void TestReference()
         {
-            var reference = new Node("root", new Node("left", new Node("left.left"), new Node("right")));
-            var result = Problem.Deserialize(Problem.Serialize(reference));
-            Assert.AreEqual("left.left", result.Left.Left.Val);
+            var reference = new Node("root", left: new Node("left", new Node("left.left")), right: new Node("right"));
+            var refSerialized = Problem.Serialize(reference, new StringBuilder());
+            var refDeserialized = Problem.Deserialize(refSerialized);
+            Assert.AreEqual("left.left", refDeserialized.Left.Left.Val);
+        }
+
+        [TestMethod]
+        public void TestJustRoot()
+        {
+            var testTree = new Node("root");
+            var treeSerialized = Problem.Serialize(testTree, new StringBuilder());
+            var treeDeserialized = Problem.Deserialize(treeSerialized);
+            Assert.AreEqual("root", treeDeserialized.Val);
+        }
+
+        [TestMethod]
+        public void TestNull()
+        {
+            Node testTree = null;
+            var treeSerialized = Problem.Serialize(testTree, new StringBuilder());
+            var treeDeserialized = Problem.Deserialize(treeSerialized);
+            Assert.IsNull(treeDeserialized);
         }
     }
 }
