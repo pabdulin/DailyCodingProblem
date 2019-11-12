@@ -23,14 +23,16 @@ Implement car and cdr.
             return pair;
         }
 
-        public static dynamic car(Func<dynamic, int> cons)
+        public static int car(Func<dynamic, int> cons)
         {
-            return null;
+            dynamic target = cons.Target;
+            return (int)target.a;
         }
 
-        public static dynamic cdr(Func<dynamic, int> cons)
+        public static int cdr(Func<dynamic, int> cons)
         {
-            return null;
+            dynamic target = cons.Target;
+            return (int)target.b;
         }
     }
 }
