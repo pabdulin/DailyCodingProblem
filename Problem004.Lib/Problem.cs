@@ -13,45 +13,52 @@ You can modify the input array in-place.
     {
         public static int FindMissing(int[] data)
         {
-            var min = int.MaxValue;
-            var max = int.MinValue;
-            var found = false;
+            var minInData = int.MaxValue;
+            var maxInData = int.MinValue;
+            var foundAboveZero = false;
             for (int i = 0; i < data.Length; i += 1)
             {
                 var value = data[i];
                 if (value > 0)
                 {
-                    min = Math.Min(min, value);
-                    max = Math.Max(max, value);
-                    found = true;
+                    minInData = Math.Min(minInData, value);
+                    maxInData = Math.Max(maxInData, value);
+                    foundAboveZero = true;
                 }
             }
 
-            if(!found)
+            if (!foundAboveZero)
             {
                 return 1;
             }
 
-            var max2 = Math.Max(max, data.Length);
-            var tempSize = max2 - min + 1;
-            var temp = new bool[tempSize];
-            var offset = min;
+            var theoreticMaxMissing = Math.Min(maxInData, data.Length);
+            var tempSequenceSize = theoreticMaxMissing - minInData + 1;
+            var tempSequence = new bool[tempSequenceSize];
+            var sequenceOffset = minInData;
 
+            // fill sequence temp array
             for (int i = 0; i < data.Length; i += 1)
             {
                 var value = data[i];
                 if (value > 0)
                 {
-                    temp[value - offset] = true;
+                    var idx = value - sequenceOffset;
+                    if (idx >= tempSequenceSize)
+                    {
+                        continue;
+                    }
+                    tempSequence[idx] = true;
                 }
             }
 
-            var result = offset;
-            foreach(var test in temp)
+            // count all sequental values that are present
+            var result = sequenceOffset;
+            foreach (var test in tempSequence)
             {
-                if(test)
+                if (test)
                 {
-                    result++;
+                    result += 1;
                 }
                 else
                 {
