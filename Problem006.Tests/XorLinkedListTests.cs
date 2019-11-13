@@ -23,7 +23,7 @@ you can assume you have access to get_pointer and dereference_pointer functions 
         [TestMethod]
         public void AddTest()
         {
-            var sut = new XorLinkedList<int>();
+            var sut = new XorLinkedList();
             Assert.AreEqual(0, sut.add(TestValue1));
             Assert.AreEqual(1, sut.add(TestValue2));
             Assert.AreEqual(2, sut.add(TestValue3));
@@ -32,13 +32,13 @@ you can assume you have access to get_pointer and dereference_pointer functions 
         [TestMethod]
         public void GetTest()
         {
-            var sut = new XorLinkedList<int>();
+            var sut = new XorLinkedList();
             var index1 = sut.add(TestValue1);
             var index2 = sut.add(TestValue2);
             var index3 = sut.add(TestValue3);
             Assert.AreEqual(TestValue1, sut.get(index1));
-            Assert.AreEqual(TestValue1, sut.get(index2));
-            Assert.AreEqual(TestValue1, sut.get(index3));
+            Assert.AreEqual(TestValue2, sut.get(index2));
+            Assert.AreEqual(TestValue3, sut.get(index3));
         }
     }
 }
