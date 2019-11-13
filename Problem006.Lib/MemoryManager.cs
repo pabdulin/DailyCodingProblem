@@ -4,7 +4,6 @@ namespace Problem006.Lib
 {
     public static class MemoryManager
     {
-        public const int NullPtr = 0;
         private static readonly Dictionary<int, Node> Memory = new Dictionary<int, Node>();
 
         public static int get_pointer(Node n)
