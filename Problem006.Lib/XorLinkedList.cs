@@ -26,15 +26,20 @@ you can assume you have access to get_pointer and dereference_pointer functions 
             }
             else
             {
-                var prev = _prev;
-                var next = _head;
-                var toAdd = new Node(element, prev, next);
-                var tempNext = next.GetNext(prev: _head);
-                var tempPrev = prev.GetPrev(next: _head);
-
-                prev.SetLink(prev: tempPrev, next: toAdd);
-                next.SetLink(prev: toAdd, next: tempNext);
-                _prev = toAdd;
+                var newNode = new Node(element, prev: _prev, next: _head);
+                if (listCount == 0)
+                {
+                    _prev.SetLink(prev: newNode, next: newNode);
+                    _head.SetLink(prev: newNode, next: newNode);
+                }
+                else
+                {
+                    var keepPrev = _prev.GetPrev(next: _head);
+                    var keepNext = _head.GetNext(prev: _prev);
+                    _prev.SetLink(prev: keepPrev, next: newNode);
+                    _head.SetLink(prev: newNode, next: keepNext);
+                }
+                _prev = newNode;
             }
 
             listCount += 1;
