@@ -22,7 +22,7 @@ For example, the following tree has 5 unival subtrees:
  1   1
      */
     [TestClass]
-    public class Problem008Test
+    public class IsUnivalTest
     {
         [TestMethod]
         public void ReferenceTest()
@@ -35,16 +35,15 @@ For example, the following tree has 5 unival subtrees:
                         right: new Node(1)),
                     right: new Node(0)));
 
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(5, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
         public void SingleTest()
         {
             var tree = new Node(1);
-
-            var result = Problem.CountInivalTrees(tree);
+            var result = IsUnivalTestOnThisNode(tree);
             Assert.AreEqual(1, result);
         }
 
@@ -52,71 +51,53 @@ For example, the following tree has 5 unival subtrees:
         public void TwoTest()
         {
             var tree = new Node(1, new Node(1));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(2, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(1, result);
         }
 
         [TestMethod]
         public void ThreeTest1()
         {
             var tree = new Node(1, new Node(1, new Node(1)));
-            
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(3, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(1, result);
         }
 
         [TestMethod]
         public void ThreeTest2()
         {
             var tree = new Node(1, new Node(1, new Node(0)));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(1, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
         public void ThreeTest3()
         {
             var tree = new Node(1, new Node(0, new Node(1)));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(1, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
         public void ThreeTest4()
         {
             var tree = new Node(1, new Node(1), new Node(1));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(3, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(1, result);
         }
+
         [TestMethod]
         public void ThreeTest5()
         {
             var tree = new Node(1, new Node(0), new Node(0));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(2, result);
+            var result = IsUnivalTestOnThisNode(tree);
+            Assert.AreEqual(0, result);
         }
 
-        [TestMethod]
-        public void FourTest1()
+        private static int IsUnivalTestOnThisNode(Node node)
         {
-            var tree = new Node(1, new Node(1, new Node(1)), new Node(1));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(4, result);
-        }
-
-        [TestMethod]
-        public void FourTest2()
-        {
-            var tree = new Node(1, new Node(0, new Node(1)), new Node(1));
-
-            var result = Problem.CountInivalTrees(tree);
-            Assert.AreEqual(2, result);
+            return Problem.IsUnival(node, node.Val);
         }
     }
 }
