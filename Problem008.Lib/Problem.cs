@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Problem008.Lib
+﻿namespace Problem008.Lib
 {
     /*
      * Daily Coding Problem: Problem #8 [Easy]
@@ -30,23 +28,17 @@ For example, the following tree has 5 unival subtrees:
 
         private static int CountRec(Node node, int count = 0)
         {
-            if (node == null)
-            {
-                return count;
-            }
-
-            var isUnival = IsUnival(node, node.Val);
-
-            //leaf is unival
+            // leaf is unival
             if (node.Left == null && node.Right == null)
             {
-                return count + isUnival;
+                return count + 1;
             }
 
+            var isUnival = IsUnival(node);
             if (node.Left != null)
             {
                 count = CountRec(node.Left, count + isUnival);
-                isUnival = 0;
+                isUnival = 0; // do not double count this node
             }
             if (node.Right != null)
             {
@@ -56,7 +48,12 @@ For example, the following tree has 5 unival subtrees:
             return count;
         }
 
-        public static int IsUnival(Node node, int val)
+        public static int IsUnival(Node node)
+        {
+            return IsUnival(node, node.Val);
+        }
+
+        private static int IsUnival(Node node, int val)
         {
             if (node.Val != val)
             {

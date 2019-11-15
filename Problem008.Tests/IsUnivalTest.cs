@@ -35,7 +35,7 @@ For example, the following tree has 5 unival subtrees:
                         right: new Node(1)),
                     right: new Node(0)));
 
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(0, result);
         }
 
@@ -43,7 +43,7 @@ For example, the following tree has 5 unival subtrees:
         public void SingleTest()
         {
             var tree = new Node(1);
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(1, result);
         }
 
@@ -51,7 +51,7 @@ For example, the following tree has 5 unival subtrees:
         public void TwoTest()
         {
             var tree = new Node(1, new Node(1));
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(1, result);
         }
 
@@ -59,7 +59,7 @@ For example, the following tree has 5 unival subtrees:
         public void ThreeTest1()
         {
             var tree = new Node(1, new Node(1, new Node(1)));
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(1, result);
         }
 
@@ -67,7 +67,7 @@ For example, the following tree has 5 unival subtrees:
         public void ThreeTest2()
         {
             var tree = new Node(1, new Node(1, new Node(0)));
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(0, result);
         }
 
@@ -75,7 +75,7 @@ For example, the following tree has 5 unival subtrees:
         public void ThreeTest3()
         {
             var tree = new Node(1, new Node(0, new Node(1)));
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(0, result);
         }
 
@@ -83,7 +83,7 @@ For example, the following tree has 5 unival subtrees:
         public void ThreeTest4()
         {
             var tree = new Node(1, new Node(1), new Node(1));
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(1, result);
         }
 
@@ -91,13 +91,8 @@ For example, the following tree has 5 unival subtrees:
         public void ThreeTest5()
         {
             var tree = new Node(1, new Node(0), new Node(0));
-            var result = IsUnivalTestOnThisNode(tree);
+            var result = Problem.IsUnival(tree);
             Assert.AreEqual(0, result);
-        }
-
-        private static int IsUnivalTestOnThisNode(Node node)
-        {
-            return Problem.IsUnival(node, node.Val);
         }
     }
 }
