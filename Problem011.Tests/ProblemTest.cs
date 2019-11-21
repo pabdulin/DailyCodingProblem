@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Problem011.Lib;
+using System;
 using System.Linq;
 
 namespace Problem011.Tests
@@ -22,9 +23,50 @@ Hint: Try preprocessing the dictionary into a more efficient data structure to s
         {
             var sut = new AutocompleteSystem(new string[] { "dog", "deer", "deal" });
             var result = sut.Query("de");
-            Assert.AreEqual(2, result.Length);
-            Assert.IsTrue(result.Contains("deer"));
-            Assert.IsTrue(result.Contains("deal"));
+            ArraysEqual(result, new string[] { "deer", "deal" });
+        }
+
+        [TestMethod]
+        public void SingleTest()
+        {
+            var sut = new AutocompleteSystem(new string[] { "d", "a", "deer", "deal" });
+            var result = sut.Query("d");
+            ArraysEqual(result, new string[] { "d", "deer", "deal" });
+            result = sut.Query("a");
+            ArraysEqual(result, new string[] { "a" });
+        }
+
+        [TestMethod]
+        public void NotFoundTest()
+        {
+            var sut = new AutocompleteSystem(new string[] { "d", "a", "deer", "deal" });
+            var result = sut.Query("n");
+            ArraysEqual(result, new string[] { });
+        }
+
+        [TestMethod]
+        public void EmptyTest()
+        {
+            var sut = new AutocompleteSystem(new string[] { "d", "a", "deer", "deal" });
+            var result = sut.Query("");
+            ArraysEqual(result, new string[] { });
+        }
+
+        [TestMethod]
+        public void OtherTest1()
+        {
+            var sut = new AutocompleteSystem(new string[] { "", "d", "a", "deer", "deal", "buzzword", "buz1word" });
+            var result = sut.Query("buzz");
+            ArraysEqual(result, new string[] { "buzzword" });
+        }
+
+        private static void ArraysEqual(string[] actual, string[] expected)
+        {
+            Assert.AreEqual(expected.Length, actual.Length);
+            foreach (var expectedItem in expected)
+            {
+                Assert.IsTrue(actual.Contains(expectedItem));
+            }
         }
     }
 }
