@@ -28,8 +28,22 @@ For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
         [TestMethod]
         public void ReferenceTest()
         {
-            var result = Problem.NumberOfWays(5, new[] { 1, 2 });
+            var result = Problem.NumberOfWays(4, new[] { 1, 2 });
             Assert.AreEqual(5, result);
+        }
+
+        [TestMethod]
+        public void SingleTest()
+        {
+            var result = Problem.NumberOfWays(4, new[] { 1 });
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void CustomTest1()
+        {
+            var result = Problem.NumberOfWays(4, new[] { 1, 2, 3, 4 });
+            Assert.AreEqual(5 + 2 + 1, result);
         }
     }
 }

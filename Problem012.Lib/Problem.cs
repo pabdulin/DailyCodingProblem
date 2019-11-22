@@ -23,9 +23,23 @@ For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
      */
     public class Problem
     {
-        public static int NumberOfWays(int steps, int[] stepsAtTime)
+        public static int NumberOfWays(int totalSteps, int[] stepsAtTime, int variantsCount = 0)
         {
-            return 0;
+            foreach (var step in stepsAtTime)
+            {
+                var remaining = totalSteps - step;
+                if (remaining == 0)
+                {
+                    return variantsCount + 1;
+                }
+                if (remaining < 0)
+                {
+                    return variantsCount;
+                }
+                variantsCount = NumberOfWays(remaining, stepsAtTime, variantsCount);
+            }
+
+            return variantsCount;
         }
     }
 }
